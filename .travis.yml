@@ -22,7 +22,7 @@ after_succes:
 
   #Push images to docker hub
 
-  - docker push lharo/FibonacciAppClient
-  - docker push lharo/FibonacciAppNginx
-  - docker push lharo/FibonacciAppServer
-  - docker push lharo/FibonacciAppWorker
+  - docker push lharo/lharo/fibonacci-app-client
+  - docker push lharo/fibonacci-app-nginx
+  - docker push lharo/fibonacci-app-server
+  - docker push lharo/fibonacci-app-worker
