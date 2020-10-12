@@ -1,0 +1,28 @@
+sudo: required
+services:
+  - docker
+
+#Build test image
+before_install:
+  - docker build -t lharo/FibonacciReactAppTest -f ./client/Dockerfile.dev ./client
+
+#Test test image
+script:
+  - docker run -e CI=true lharo/FibonacciReactAppTest npm test
+
+#Build production images
+after_succes:
+  - docker build -t lharo/FibonacciAppClient ./client
+  - docker build -t lharo/FibonacciAppNginx ./nginx
+  - docker build -t lharo/FibonacciAppServer ./server
+  - docker build -t lharo/FibonacciAppWorker ./worker
+
+  #Log into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  #Push images to docker hub
+
+  - docker push lharo/FibonacciAppClient
+  - docker push lharo/FibonacciAppNginx
+  - docker push lharo/FibonacciAppServer
+  - docker push lharo/FibonacciAppWorker
